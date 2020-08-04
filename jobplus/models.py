@@ -9,16 +9,15 @@
 @file: models.py
 @create_time = 2020/8/44:29 下午
 """
+from datetime import datetime
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
+from flask import url_for
 
+db = SQLAlchemy()
 
-def func():
+class Base(db.Model):
     pass
 
-
-class Main():
-    def __init__(self):
-        pass
-
-
-if __name__ == "__main__":
+class User(Base, UserMixin):
     pass

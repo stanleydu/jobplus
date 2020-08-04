@@ -9,7 +9,9 @@
 @file: manage.py
 @create_time = 2020/8/44:20 下午
 """
+from jobplus.app import create_app
 
+app = create_app('development')
 
 def func():
     pass

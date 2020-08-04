@@ -9,16 +9,30 @@
 @file: app.py
 @create_time = 2020/8/44:28 下午
 """
+from flask import Flask
+from jobplus.config import configs
+from flask_migrate import Migrate
+from flask_login import LoginManager
+from jobplus.models import db, User
 
+def create_app(config):
+    app = Flask(__name__)
+    app.config.from_object(configs.get(config))
+    register_extensions(app)
+    register_blueprint(app)
 
-def func():
-    pass
+def register_blueprints(app):
+    from .handlers import front
+    app.register_blueprint(front)
 
+def register_extensions(app):
+    db.init_app(app)
+    Migrate(app, db)
+    login_manager = LoginManager()
+    login_manager.init_app(app)
 
-class Main():
-    def __init__(self):
-        pass
+    @login_manager.user_loader
+    def user_loader(id):
+        return User.query.get(id)
 
-
-if __name__ == "__main__":
-    pass
+    login_manager.login_view = 'front.login'
